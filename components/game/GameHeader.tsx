@@ -4,12 +4,13 @@ import { GameColors } from '../../constants/theme';
 
 interface GameHeaderProps {
     level: number;
+    totalLevels?: number;
     coins: number;
     onBack: () => void;
     onHint: () => void;
 }
 
-export const GameHeader: React.FC<GameHeaderProps> = ({ level, coins, onBack, onHint }) => {
+export const GameHeader: React.FC<GameHeaderProps> = ({ level, totalLevels, coins, onBack, onHint }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={onBack} style={styles.button}>
@@ -18,7 +19,9 @@ export const GameHeader: React.FC<GameHeaderProps> = ({ level, coins, onBack, on
 
             <View style={styles.center}>
                 <Text style={styles.levelLabel}>LEVEL</Text>
-                <Text style={styles.levelText}>{level}</Text>
+                <Text style={styles.levelText}>
+                    {level} {totalLevels ? `/ ${totalLevels}` : ''}
+                </Text>
             </View>
 
             <View style={styles.right}>

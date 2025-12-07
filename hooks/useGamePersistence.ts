@@ -57,6 +57,10 @@ export const useGamePersistence = () => {
     }
   };
 
+  const refreshData = async () => {
+    await loadData();
+  };
+
   return {
     coins,
     completedLevels,
@@ -64,5 +68,6 @@ export const useGamePersistence = () => {
     addCoins,
     spendCoins,
     markLevelComplete,
+    refreshData,
   };
 };

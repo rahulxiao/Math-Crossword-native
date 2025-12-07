@@ -1,15 +1,30 @@
 import { Levels } from './levels';
-import { Difficulty, Grid, Level } from './types';
+import { Grid, Level } from './types';
 
-export const generateLevel = (difficulty: Difficulty): Level => {
-  // Randomly pick one of the 12 levels
-  const index = Math.floor(Math.random() * Levels.length);
-  const getLevelData = Levels[index];
+export const TOTAL_LEVELS = Levels.length;
+
+export const generateLevel = (levelInput: number | /* legacy */ string = 1): Level => {
+  let levelIndex = 0;
+
+  if (typeof levelInput === 'number') {
+    levelIndex = Math.max(0, Math.min(levelInput - 1, Levels.length - 1));
+  } else {
+    console.warn('generateLevel called with string/invalid input:', levelInput);
+    levelIndex = 0;
+  }
+
+  const getLevelData = Levels[levelIndex];
+  if (!getLevelData) {
+    console.error(`Level data missing for index ${levelIndex}`);
+    // Fallback
+    return generateLevel(1);
+  }
+
   const levelData = getLevelData();
-  
+
   return {
-    id: `level-${index + 1}`,
-    difficulty,
+    id: `level-${levelIndex + 1}`,
+    difficulty: 'EASY',
     grid: { rows: 5, cols: 5, cells: levelData.cells },
     solution: levelData.solution
   };
@@ -24,7 +39,7 @@ export const evaluateEquation = (equation: string[]): boolean => {
   if (!equation.includes('=')) return false;
   const parts = equation.join('').split('=');
   if (parts.length !== 2) return false;
-  
+
   try {
     const left = Function('"use strict";return (' + parts[0] + ')')();
     const right = Function('"use strict";return (' + parts[1] + ')')();
@@ -40,7 +55,7 @@ export const validateGrid = (grid: Grid): { isComplete: boolean; invalidCells: s
   let allFilled = true;
 
   // Check Rows
-  for (let r = 0; r < grid.rows; r += 2) { 
+  for (let r = 0; r < grid.rows; r += 2) {
     const rowTokens: (string | number)[] = [];
     const rowCellIds: string[] = [];
     let hasEmpty = false;
@@ -48,9 +63,9 @@ export const validateGrid = (grid: Grid): { isComplete: boolean; invalidCells: s
     for (let c = 0; c < grid.cols; c++) {
       const cell = grid.cells[r][c];
       if (cell.type === 'BLOCK') continue;
-      
+
       rowCellIds.push(cell.id);
-      
+
       if (cell.type === 'NUMBER') {
         if (cell.value === null) {
           hasEmpty = true;
@@ -93,16 +108,16 @@ export const validateGrid = (grid: Grid): { isComplete: boolean; invalidCells: s
         }
         colTokens.push(cell.value);
       } else if (cell.displayValue) {
-         colTokens.push(cell.displayValue);
+        colTokens.push(cell.displayValue);
       }
     }
-    
+
     if (!hasEmpty) {
-       const isValid = evaluateEquation(colTokens.map(String));
-       if (!isValid) {
-         isComplete = false;
-         invalidCells.push(...colCellIds);
-       }
+      const isValid = evaluateEquation(colTokens.map(String));
+      if (!isValid) {
+        isComplete = false;
+        invalidCells.push(...colCellIds);
+      }
     } else {
       allFilled = false;
       isComplete = false;

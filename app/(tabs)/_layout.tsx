@@ -29,10 +29,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="levels"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Levels',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="grid.circle.fill" color={color} />, // SF Symbol name approximation
         }}
       />
     </Tabs>

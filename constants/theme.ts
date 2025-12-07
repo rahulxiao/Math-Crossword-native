@@ -31,10 +31,10 @@ export const GameColors = {
   primary: '#38B2AC', // Teal 400 - Vivid and readable against dark
   secondary: '#81E6D9', // Teal 200
   accent: '#F6AD55', // Orange 300 - Warm accent
-  
+
   background: '#1A202C', // Gray 900 - Deep Slate
   surface: '#2D3748', // Gray 800 - Component background
-  
+
   text: {
     primary: '#F7FAFC', // Gray 50
     secondary: '#A0AEC0', // Gray 400
@@ -51,12 +51,14 @@ export const GameColors = {
     text: '#FFFFFF',
     lockedText: '#CBD5E0', // Gray 300
   },
-  
+
   button: {
     background: '#4A5568',
     text: '#F7FAFC',
     pressed: '#2D3748',
-  }
+  },
+
+  success: '#48BB78', // Green 500
 };
 
 export const Fonts = Platform.select({
