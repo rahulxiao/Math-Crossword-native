@@ -608,24 +608,68 @@ export const getLevel13 = () => {
   cells[4] = [createCell(4, 0, 4, 'NUMBER', true), createCell(4, 1, null, 'OPERATOR', true, '+'), createCell(4, 2, 4, 'NUMBER', false), createCell(4, 3, null, 'EQUALS', true, '='), createCell(4, 4, 8, 'NUMBER', true)];
   return prepareLevel(cells);
 };
-
-// Level 14 (Fixed)
-// R0: 8 / 2 = 4
-// R2: 2 * 3 = 6
-// R4: 4 + 6 = 10
-// C0: 8 - 4 = 4
-// C2: 2 + 4 = 6
-// C4: 4 + 6 = 10
 export const getLevel14 = () => {
   const cells: Cell[][] = [];
-  for (let r = 0; r < 5; r++) { const row = []; for (let c = 0; c < 5; c++) row.push(createCell(r, c, null, 'BLOCK', true)); cells.push(row); }
-  cells[0] = [createCell(0, 0, 8, 'NUMBER', false), createCell(0, 1, null, 'OPERATOR', true, '/'), createCell(0, 2, 2, 'NUMBER', true), createCell(0, 3, null, 'EQUALS', true, '='), createCell(0, 4, 4, 'NUMBER', true)];
-  cells[1] = [createCell(1, 0, null, 'OPERATOR', true, '-'), createCell(1, 1, null, 'BLOCK', true), createCell(1, 2, null, 'OPERATOR', true, '+'), createCell(1, 3, null, 'BLOCK', true), createCell(1, 4, null, 'OPERATOR', true, '+')];
-  cells[2] = [createCell(2, 0, 2, 'NUMBER', true), createCell(2, 1, null, 'OPERATOR', true, '*'), createCell(2, 2, 3, 'NUMBER', false), createCell(2, 3, null, 'EQUALS', true, '='), createCell(2, 4, 6, 'NUMBER', false)];
-  cells[3] = [createCell(3, 0, null, 'EQUALS', true, '='), createCell(3, 1, null, 'BLOCK', true), createCell(3, 2, null, 'EQUALS', true, '='), createCell(3, 3, null, 'BLOCK', true), createCell(3, 4, null, 'EQUALS', true, '=')];
-  cells[4] = [createCell(4, 0, 4, 'NUMBER', false), createCell(4, 1, null, 'OPERATOR', true, '+'), createCell(4, 2, 6, 'NUMBER', true), createCell(4, 3, null, 'EQUALS', true, '='), createCell(4, 4, 10, 'NUMBER', true)];
+
+  // initialize 5x5 grid with BLOCK cells (editable = true)
+  for (let r = 0; r < 5; r++) {
+    const row: Cell[] = [];
+    for (let c = 0; c < 5; c++) {
+      row.push(createCell(r, c, null, 'BLOCK', true));
+    }
+    cells.push(row);
+  }
+
+  // Row 0
+  cells[0] = [
+    createCell(0, 0, 8, 'NUMBER', false),
+    createCell(0, 1, null, 'OPERATOR', true, '/'),
+    createCell(0, 2, 2, 'NUMBER', true),
+    createCell(0, 3, null, 'EQUALS', true, '='),
+    createCell(0, 4, 4, 'NUMBER', true),
+  ];
+
+  // Row 1 (operators / blocks)
+  cells[1] = [
+    createCell(1, 0, null, 'OPERATOR', true, '-'),
+    createCell(1, 1, null, 'BLOCK', true),
+    createCell(1, 2, null, 'OPERATOR', true, '+'),
+    createCell(1, 3, null, 'BLOCK', true),
+    createCell(1, 4, null, 'OPERATOR', true, '+'),
+  ];
+
+  // Row 2 (fixed so vertical & horizontal math match)
+  // 2 * 4 = 8
+  cells[2] = [
+    createCell(2, 0, 2, 'NUMBER', true),
+    createCell(2, 1, null, 'OPERATOR', true, '*'),
+    createCell(2, 2, 4, 'NUMBER', false),   // changed from 3 -> 4
+    createCell(2, 3, null, 'EQUALS', true, '='),
+    createCell(2, 4, 8, 'NUMBER', false),   // changed from 6 -> 8
+  ];
+
+  // Row 3 (equals row for columns)
+  cells[3] = [
+    createCell(3, 0, null, 'EQUALS', true, '='),
+    createCell(3, 1, null, 'BLOCK', true),
+    createCell(3, 2, null, 'EQUALS', true, '='),
+    createCell(3, 3, null, 'BLOCK', true),
+    createCell(3, 4, null, 'EQUALS', true, '='),
+  ];
+
+  // Row 4 (results)
+  // 6 + 6 = 12
+  cells[4] = [
+    createCell(4, 0, 6, 'NUMBER', false),   // changed from 4 -> 6
+    createCell(4, 1, null, 'OPERATOR', true, '+'),
+    createCell(4, 2, 6, 'NUMBER', true),    // kept as 6
+    createCell(4, 3, null, 'EQUALS', true, '='),
+    createCell(4, 4, 12, 'NUMBER', true),   // changed from 10 -> 12
+  ];
+
   return prepareLevel(cells);
 };
+
 
 // Level 15 (Fixed)
 // R0: 5 + 4 = 9
@@ -717,8 +761,19 @@ export const getLevel20 = () => {
   return prepareLevel(cells);
 };
 
+import {
+  getLevel21, getLevel22, getLevel23, getLevel24, getLevel25,
+  getLevel26, getLevel27, getLevel28, getLevel29, getLevel30,
+  getLevel31, getLevel32, getLevel33, getLevel34, getLevel35,
+  getLevel36, getLevel37, getLevel38, getLevel39, getLevel40
+} from './higerlevels';
+
 export const Levels = [
   getLevel1, getLevel2, getLevel3, getLevel4, getLevel5, getLevel6,
   getLevel7, getLevel8, getLevel9, getLevel10, getLevel11, getLevel12,
-  getLevel13, getLevel14, getLevel15, getLevel16, getLevel17, getLevel18, getLevel19, getLevel20
+  getLevel13, getLevel14, getLevel15, getLevel16, getLevel17, getLevel18, getLevel19, getLevel20,
+  getLevel21, getLevel22, getLevel23, getLevel24, getLevel25,
+  getLevel26, getLevel27, getLevel28, getLevel29, getLevel30,
+  getLevel31, getLevel32, getLevel33, getLevel34, getLevel35,
+  getLevel36, getLevel37, getLevel38, getLevel39, getLevel40
 ];
